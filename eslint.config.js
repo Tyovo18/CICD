@@ -1,65 +1,56 @@
-const globals = require('globals');
-const js = require('@eslint/js');
-const ts = require('@typescript-eslint/eslint-plugin');
-const tsParser = require('@typescript-eslint/parser');
+import eslint from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import globals from 'globals';
+import jestPlugin from 'eslint-plugin-jest';
 
-module.exports = [
-  js.configs.recommended,
+export default tseslint.config(
   {
-    files: ['**/*.ts', '**/*.js'],
+    // Ignorer les fichiers de build et de configuration
+    ignores: [
+      'dist/**',
+      'node_modules/**',
+      'coverage/**',
+      '*.config.js',
+      '*.config.mjs',
+      'eslint.config.js',
+      'jest.config.js'
+    ]
+  },
+  eslint.configs.recommended,
+  ...tseslint.configs.recommended,
+  {
     languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
       globals: {
         ...globals.node,
-        ...globals.es2021
+        ...globals.es2021,
+        ...globals.jest
       },
-      parser: tsParser,
       parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module'
-      }
-    },
-    plugins: {
-      '@typescript-eslint': ts
+        project: './tsconfig.json',
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
     rules: {
-      'indent': ['error', 2],
-      'linebreak-style': 'off', // Disable linebreak checking
-      'quotes': ['error', 'single'],
-      'semi': ['error', 'always'],
       'no-console': 'off',
-      'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': ['warn', { 
-        argsIgnorePattern: '^_',
-        varsIgnorePattern: '^_' 
+      '@typescript-eslint/no-unused-vars': ['error', { 
+        'argsIgnorePattern': '^_',
+        'varsIgnorePattern': '^_' 
       }],
-      '@typescript-eslint/explicit-function-return-type': 'warn',
-      '@typescript-eslint/explicit-module-boundary-types': 'warn',
-      '@typescript-eslint/no-explicit-any': 'warn',
-      'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
-      'comma-dangle': ['error', 'never'],
-      'arrow-spacing': ['error', { before: true, after: true }],
-      'no-var': 'error',
-      'prefer-const': 'error'
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/no-explicit-any': 'warn'
     }
   },
   {
-    files: ['**/*.js'],
+    files: ['**/*.test.ts', '**/__tests__/**/*.ts'],
+    ...jestPlugin.configs['flat/recommended'],
     languageOptions: {
       globals: {
-        ...globals.node,
-        ...globals.es2021
+        ...jestPlugin.environments.globals.globals,
       }
+    },
+    rules: {
+      ...jestPlugin.configs['flat/recommended'].rules,
+      '@typescript-eslint/no-explicit-any': 'off',
     }
-  },
-  {
-    ignores: [
-      'node_modules/',
-      'dist/',
-      'coverage/',
-      '*.min.js',
-      '.env'
-    ]
   }
-];
+);
