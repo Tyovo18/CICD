@@ -7,7 +7,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 .pnpm-store/
-package-lock.json
+# package-lock.json
 
 # -----------------------------
 # Env files (ne jamais commit)
