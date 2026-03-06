@@ -13,7 +13,8 @@ export default tseslint.config(
       '*.config.js',
       '*.config.mjs',
       'eslint.config.js',
-      'jest.config.js'
+      'jest.config.js',
+      'script.js',        
     ]
   },
   eslint.configs.recommended,
