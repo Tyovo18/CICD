@@ -4,8 +4,8 @@ import {
   modifierQuantite,
   produitEstDansPanier,
   trouverArticle
-} from '../fonctions';
-import { Product } from '../types';
+} from '../fonctions.js';  // Added .js extension
+import { Product } from '../types.js';  // Added .js extension
 
 describe('Fonctions de gestion de panier', () => {
   // Utilisation de la structure de votre products.json
