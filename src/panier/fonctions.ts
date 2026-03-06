@@ -1,4 +1,4 @@
-import { Product, ArticlePanier } from './types';
+import { Product, ArticlePanier } from './types.js';  // Added .js extension
 
 /**
  * Calcule le prix après application d'une réduction

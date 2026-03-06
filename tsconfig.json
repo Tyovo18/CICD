@@ -1,14 +1,12 @@
 {
   "compilerOptions": {
     /* Langue et Environnement */
-    "target": "ES2020",
-    "lib": ["ES2020"],
-    "module": "commonjs",
-    "moduleResolution": "node",
     "outDir": "./dist",
     "rootDir": "./src",
-    "baseUrl": "./src",
-    
+    "module": "NodeNext",        // Changed from CommonJS
+    "moduleResolution": "NodeNext", // Changed from Node
+    "target": "ES2020",
+
     /* Règles strictes */
     "strict": true,
     "noImplicitAny": true,
@@ -39,3 +37,4 @@
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist","tests"]
 }
+
